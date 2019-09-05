@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       log_in @user
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to @user                                                         # ログインしたユーザーのページにリダイレクト
+      redirect_back_or @user                                                         # ログインしたユーザーのページにリダイレクト
     else
       flash.now[:danger] = 'Invalid email/password combination'                 # flashメッセージを表示し、新しいリクエストが発生した時に消す
       render 'new'                                                              # newビューの出力
